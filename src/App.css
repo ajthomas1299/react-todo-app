@@ -1,0 +1,120 @@
+/* App.css */
+
+body {
+    background: rgb(19,19,19);
+    color: #fff;
+    font-family: 'Noto Sans', sans-serif;
+      
+}
+
+.app {
+    /*  */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    
+}
+
+.container-1 {
+    /*  */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    /* A width of 90% looks good on my phone. */
+    width: 90%;
+    padding: 10px;
+    margin: 15px;
+    border: 10px solid lightblue ;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+
+.app-title {
+    font-size: 50px;
+    margin: auto;
+    padding: 32px;
+}
+
+.add-task {
+    /*  */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+}
+
+.input-field {
+    /*  */
+    margin: 16px;
+}
+
+input {
+    /*  */
+    height: 48px;
+    color: black;
+    font-size: 24px;
+    border-radius: 8px;
+    overflow: hidden;
+    
+}
+
+.add-task-button {
+    /*  */
+    margin: 16px;
+    
+}
+
+button {
+    /*  */
+    /* height: 54px; */
+    padding: 16px;
+    font-size: 24px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Going for a dark mode look;) */
+
+#clock-main {
+    display: flex;
+    align-items: center;
+    background: rgb(19,19,19);
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#clock-parent {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    justify-content: space-around;
+    height: 34px;
+    width: 175px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#digital-clock {
+    display: flex;
+    overflow: hidden;
+    /*👉flex-direction: column;👈*/
+    color: rgb(161, 156, 156);
+    align-items: center;
+    background-color: rgb(26, 24, 24);
+    height: 18px;
+    font-size: 16px ;
+    /* padding adds space to the inside of the div. */
+    padding: 5px;
+}
+
+
+/* *********************************************** */

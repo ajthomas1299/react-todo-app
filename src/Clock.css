@@ -1,0 +1,20 @@
+/* Going for a dark mode look;) */
+
+#clock-parent {
+    align-items: center;
+    background-color: black;
+    display: flex;
+    justify-content: space-around;
+    height: 300px;
+    flex-direction: column;
+}
+
+#digital-clock {
+    color: rgb(161, 156, 156);
+    align-items: center;
+    background-color: rgb(26, 24, 24);
+    height: 60px;
+    font-size: 40px ;
+    /* padding adds space to the inside of the div. */
+    padding: 15px;
+}
