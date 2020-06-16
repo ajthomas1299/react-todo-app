@@ -29,7 +29,7 @@ body {
     width: 90%;
     padding: 10px;
     margin: 15px;
-    border: 10px solid lightblue ;
+    border: 5px solid lightblue ;
     border-radius: 24px;
     overflow: hidden;
 }
@@ -38,7 +38,7 @@ body {
 .app-title {
     font-size: 50px;
     margin: auto;
-    padding: 32px;
+    padding: 22px;
 }
 
 .add-task {
@@ -47,7 +47,6 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    text-align: center;
     align-items: center;
 
 }
@@ -75,7 +74,6 @@ input {
 
 button {
     /*  */
-    /* height: 54px; */
     padding: 16px;
     font-size: 24px;
     border-radius: 16px;
@@ -106,7 +104,6 @@ button {
 #digital-clock {
     display: flex;
     overflow: hidden;
-    /*👉flex-direction: column;👈*/
     color: rgb(161, 156, 156);
     align-items: center;
     background-color: rgb(26, 24, 24);

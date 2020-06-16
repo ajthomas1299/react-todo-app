@@ -58,7 +58,7 @@ function App() {
       const retrievedTasks = [];
 
       // Create the object array.
-      db.collection("tasks").get().then(function(querySnapshot) {
+      db.collection("tasks").orderBy("dateTime").get().then(function(querySnapshot) {
 
         // 
         querySnapshot.forEach(function(doc) {
