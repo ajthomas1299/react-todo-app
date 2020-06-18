@@ -1,47 +1,47 @@
 // Clock for Task app
+import React, { useState, useEffect } from "react";
 
-function getDateTime() {
-    var now     = new Date(); 
-    var year    = now.getFullYear();
-    var month   = now.getMonth()+1; 
-    var day     = now.getDate();
-    var hour    = now.getHours();
-    var minute  = now.getMinutes();
-    var second  = now.getSeconds(); 
-    if(month.toString().length === 1) {
-         month = '0'+month;
-    }
-    if(day.toString().length === 1) {
-         day = '0'+day;
-    }   
-    if(hour.toString().length === 1) {
-         hour = '0'+hour;
-    }
-    if(minute.toString().length === 1) {
-         minute = '0'+minute;
-    }
-    if(second.toString().length === 1) {
-         second = '0'+second;
-    }   
+//  The Clock Compnent's main function.  Everything is in here.
+const Clock = () => {
+  // Setup short term memory.
+  const [currentTime, setCurrentTime] = useState("loading...");
 
-    // Structured to with YEAR first then Month Day. better for use as a key and
-    // sorting in databases??
-    
-    //var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;  
+  // Build the Current Timestamp to display.
+  function getDateTime() {
+    //
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
 
-    // Structured the way I am more used to: Month Day Year.
-    var dateTime = month+'/'+day+'/'+year+' '+hour+':'+minute+':'+second;  
+    var time = now.toLocaleTimeString();
 
-     return dateTime;
-}
+    // Structured the way I am more used to: Month Day Year, for display on screen.
+    var dateTime = month + "/" + day + "/" + year + " " + time;
 
-// example usage: realtime clock
-setInterval(function(){
+    return dateTime;
+  }
 
-    let currentTime = getDateTime();
+  // Set string to our clock's state / short term memory.
+  useEffect(() => {
+    // Set clock to update every second.
+    // The setInterval() method calls a function or
+    // evaluates an expression at specified intervals (in milliseconds).
+    const interval = setInterval(() => {
+      setCurrentTime((currentTime) => getDateTime());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-    document.getElementById("digital-clock").innerHTML = currentTime;
+  // return = no more javascript section.
+  return (
+    <div id="clock-main">
+      <div id="clock-parent">
+        <div id="digital-clock">{currentTime}</div>
+      </div>
+    </div>
+  );
+};
 
-}, 1000);
-
+export default Clock;
 ///////////////////////////////////////////////////////////////////////
