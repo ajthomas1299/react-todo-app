@@ -1,0 +1,15 @@
+.logout-div {
+  display: flex;
+}
+
+.logout-button {
+  background-color: lightblue;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  width: 75px;
+  height: 20px;
+  padding: 5px;
+  padding-bottom: 20px;
+  margin-left: 24px;
+}

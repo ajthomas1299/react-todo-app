@@ -1,9 +1,11 @@
 //import React from 'react';
 import React, { useState, useEffect } from "react";
+import Login from "./Login";
+import Logout from "./Logout";
+import Input from "./Input";
 import Task from "./Task";
-import Clock from "./Clock"; //This is causing a warning but it is needed for the clock to work.
 import "./App.css";
-import db from "./firebase";
+import { db, auth } from "./firebase";
 
 // The App Compnent's main function.  Everything is in here.
 function App() {
@@ -14,8 +16,84 @@ function App() {
   // set up tasks array.  map will not work unless it is an array []. (ended up not using map)
   const [tasks, setTasks] = useState([]);
 
-  // make some short term memory / setup the state
-  const [input, setInput] = useState("");
+  // write a state (short term memory. array) hook
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+
+  // when component loads, run this...
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in.
+      // set user's state
+      setUser(user);
+    } else {
+      // No user is signed in.
+      // Set the user state to null.
+      setUser(null);
+    }
+  });
+
+  // login function.
+  const login = (e) => {
+    //keep page from refreshing on submit.
+    e.preventDefault();
+
+    // console.log("the default details are");
+    // console.log(username);
+    // console.log(password);
+    // console.log("logging in...");
+
+    // A promise. Is when a function call goes out and then brings back info.
+    // Go and try and login with that email and pw, 'then' comeback, and 'catch' any errors.
+    auth
+      .signInWithEmailAndPassword(username, password)
+      // .then((response) => {
+      //   // set user's state
+      //   setUser(response.user);
+
+      //   console.log("logged in successful: ");
+      //   console.log(response);
+      // })
+      .catch((error) => {
+        console.log("error logging in: ");
+        console.log(error);
+        setError(error.message);
+      });
+  };
+
+  // logout function.
+  const logout = (e) => {
+    //keep page from refreshing on submit.
+    e.preventDefault();
+
+    auth.signOut();
+
+    setUsername(null);
+    setPassword(null);
+    setError(null);
+    setUser(null);
+  };
+
+  // createAccount function.
+  const createAccount = (e) => {
+    //keep page from refreshing on submit.
+    e.preventDefault();
+
+    console.log("resgistering...");
+
+    auth
+      .createUserWithEmailAndPassword(username, password)
+      // .then((response) => {
+      //   console.log("the new user is: ", response);
+      // })
+      .catch((error) => {
+        console.log("error creating user: ");
+        console.log(error);
+        setError(error.message);
+      });
+  };
 
   // map our database content to our tasks state / short term memory.
   useEffect(() => {
@@ -34,7 +112,7 @@ function App() {
 
       // Create the object array.
       db.collection("tasks")
-        .orderBy("dateTime")
+        .orderBy("dateTime", "desc")
         .get()
         .then(function (querySnapshot) {
           //
@@ -50,77 +128,6 @@ function App() {
         });
     });
   }, []); // <= run once on mount
-
-  // getDateTime function. This function returns the current timestamp.
-  function getDateTime() {
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1;
-    var day = now.getDate();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
-    if (month.toString().length === 1) {
-      month = "0" + month;
-    }
-    if (day.toString().length === 1) {
-      day = "0" + day;
-    }
-    if (hour.toString().length === 1) {
-      hour = "0" + hour;
-    }
-    if (minute.toString().length === 1) {
-      minute = "0" + minute;
-    }
-    if (second.toString().length === 1) {
-      second = "0" + second;
-    }
-
-    var dateTime =
-      year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
-
-    return dateTime;
-  }
-
-  // newID function. An attempt to get a unique ID for adding rows to the database.
-  const newID = () => {
-    //
-    var myRef = db.collection("tasks").doc();
-    var newUniqueID = myRef.id;
-
-    return newUniqueID;
-  };
-
-  // handleSubmit function. Add task function to handle button click. e for event.
-  const handleSubmit = (e) => {
-    // we do this to prevent the whole page from refreshing!
-    e.preventDefault();
-
-    // get a dateTime for the collection. So we can sort etc.
-    var currentTime = getDateTime();
-
-    // get new unique (hopefull) id from the Firebase collection
-    var sAKey = newID();
-
-    // ... = spread operator ES6. Whatever is inside the array spread it out.
-    // spread whatever is inside of the array, seperate them add the input and
-    // put them inside the new tasks array.
-
-    //setTasks([...tasks, input]);  // puts the next task on the bottom.
-    //setTasks([ input, ...tasks]); // puts the next task on the top.
-
-    // database version of the above.
-    db.collection("tasks").add({
-      AKey: sAKey,
-      title: input,
-      dateTime: currentTime,
-      completed: false,
-      textDec: "none",
-    });
-
-    // clear the input field
-    setInput("");
-  };
 
   // handleDelete function. to handle delete button click. e for event.
   const handleDelete = (e) => {
@@ -181,44 +188,40 @@ function App() {
   return (
     <div className="app">
       <div className="container-1">
-        <div className="app-title">Task List</div>
+        {!user ? (
+          <Login
+            appUser={user}
+            appUserName={username}
+            setAppUserName={setUsername}
+            appUserPw={password}
+            loginUser={login}
+            createUserAccount={createAccount}
+            appSetPassword={setPassword}
+            appSetError={setError}
+            appError={error}
+            userAuth={auth}
+          />
+        ) : (
+          <div>
+            <Logout logoutUser={logout} />
 
-        <form>
-          <div className="add-task">
-            <div className="input-field">
-              <input
-                placeholder="Enter Task"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                type="text"
-              />
-            </div>
+            <Input />
 
-            <div className="add-task-button">
-              <button disabled={!input} onClick={handleSubmit}>
-                Save
-              </button>
+            <div>
+              {tasks.map((task, i) => (
+                <Task
+                  title={task.title}
+                  completed={task.completed}
+                  key={i}
+                  index={task.id}
+                  deleteTask={handleDelete}
+                  markComplete={handleComplete}
+                  titleStyle={task.textDec}
+                />
+              ))}
             </div>
           </div>
-
-          <Clock />
-
-          <hr></hr>
-        </form>
-
-        <div>
-          {tasks.map((task, i) => (
-            <Task
-              title={task.title}
-              completed={task.completed}
-              key={i}
-              index={task.id}
-              deleteTask={handleDelete}
-              markComplete={handleComplete}
-              titleStyle={task.textDec}
-            />
-          ))}
-        </div>
+        )}
       </div>
     </div>
   );
