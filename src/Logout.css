@@ -1,5 +1,8 @@
+/* Logout.css */
+
 .logout-div {
   display: flex;
+  align-items: center;
 }
 
 .logout-button {
@@ -12,4 +15,8 @@
   padding: 5px;
   padding-bottom: 20px;
   margin-left: 24px;
+}
+
+.user-email {
+  margin-left: 6px;
 }

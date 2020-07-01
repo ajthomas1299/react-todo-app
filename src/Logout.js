@@ -12,6 +12,7 @@ const Logout = (props) => {
       <button className="logout-button" onClick={props.logoutUser}>
         Logout
       </button>
+      <p className="user-email">{props.appUserName}</p>
     </div>
   );
 };

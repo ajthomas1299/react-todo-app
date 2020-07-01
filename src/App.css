@@ -33,45 +33,7 @@ body {
 }
 
 .app-title {
-  font-size: 50px;
-  margin: auto;
-  padding: 22px;
-}
-
-.add-task {
-  /*  */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.input-field {
-  /*  */
-  margin: 16px;
-}
-
-input {
-  /*  */
-  height: 48px;
-  color: black;
-  font-size: 24px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.add-task-button {
-  /*  */
-  margin: 16px;
-}
-
-button {
-  /*  */
-  padding: 16px;
-  font-size: 24px;
-  border-radius: 16px;
-  overflow: hidden;
+  font-size: 45px;
 }
 
 /* Going for a dark mode look;) */
@@ -105,6 +67,49 @@ button {
   font-size: 16px;
   /* padding adds space to the inside of the div. */
   padding: 5px;
+}
+
+hr {
+  width: 90%;
+}
+
+/* Input.css */
+
+.add-task {
+  /*  */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-field {
+  /*  */
+  margin: 16px;
+}
+
+input {
+  /*  */
+  height: 48px;
+  color: black;
+  font-size: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.add-task-button {
+  /*  */
+  margin: 16px;
+}
+
+button {
+  /*  */
+  background-color: #4caf50;
+  padding: 10px;
+  font-size: 25px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 /* *********************************************** */

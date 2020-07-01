@@ -1,7 +1,4 @@
 /* Login.css */
-.login-form {
-  /*👉background-color: red;👈*/
-}
 
 .username-field {
   /*  */
@@ -54,6 +51,21 @@ input {
   /*👉width: 50px;👈*/
   flex-grow: 1;
   margin: 16px;
+}
+
+.error-container {
+  border: "thick solid #0000FF";
+  /*👉background-color: lightcoral;👈*/
+  border-width: 33px;
+  /*👉border-color: red;👈*/
+}
+
+.error-message {
+  /*   */
+}
+
+.error-text {
+  color: red;
 }
 
 /* *********************************************** */

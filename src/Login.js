@@ -20,7 +20,7 @@ const Login = (props) => {
               value={props.appUserName}
               onChange={(e) => props.setAppUserName(e.target.value)}
               type="text"
-              placeholder="Enter Username"
+              placeholder="Enter Email"
             />
             <input
               className="password-field"
@@ -29,7 +29,9 @@ const Login = (props) => {
               type="password"
               placeholder="Enter Password"
             />
-
+            <div className="error-container">
+              {props.appError && <p className="error-text">{props.appError}</p>}
+            </div>
             <button
               className="login-button"
               type="submit"
@@ -53,7 +55,6 @@ const Login = (props) => {
               Forgot Password?
             </button>
           </div>
-          {props.appError && <p>{props.appError}</p>}
         </form>
       ) : (
         <button onClick={(e) => props.userAuth.signOut()}>Logout</button>
