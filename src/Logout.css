@@ -3,9 +3,11 @@
 .logout-div {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.logout-button {
+.logout-button,
+.refresh-button {
   background-color: lightblue;
   text-align: center;
   font-size: 14px;
@@ -19,4 +21,8 @@
 
 .user-email {
   margin-left: 6px;
+}
+
+.refresh-button {
+  margin-right: 24px;
 }

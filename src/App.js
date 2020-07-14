@@ -19,6 +19,7 @@ function App() {
 
   // set up tasks array.  map will not work unless it is an array []. (ended up not using map)
   const [tasks, setTasks] = useState([]);
+  // const [newTasks, setNewTasks] = useState([]);
 
   // write a state (short term memory. array) hook
   const [username, setUsername] = useState("");
@@ -87,6 +88,10 @@ function App() {
           });
 
           setTasks(retrievedTasks);
+
+          //
+          //console.log("here are the retrieved Tasks: ", retrievedTasks);
+          ////
         });
     }
     //////////
@@ -131,6 +136,7 @@ function App() {
     e.preventDefault();
 
     setTasks([]);
+    // setNewTasks([]);
     setUsername("");
     setPassword("");
     setError("");
@@ -146,6 +152,16 @@ function App() {
         console.log(error);
       });
     ////
+  };
+
+  // refresh page function.
+  const refresh = () => {
+    // Troubleshooting
+    //console.log("About to refresh page: ");
+
+    //window.location.reload(true);
+    window.location.reload(false); // the default, refreshes from cache.
+    //
   };
 
   // createAccount function.
@@ -218,10 +234,10 @@ function App() {
     e.preventDefault();
 
     // get a dateTime for the collection. So we can sort etc.
-    var currentTime = getDateTime();
+    let currentTime = getDateTime();
 
     // get new unique (hopefull) id from the Firebase collection
-    var sAKey = newID();
+    let sAKey = newID();
 
     // ... = spread operator ES6. Whatever is inside the array spread it out.
     // spread whatever is inside of the array, seperate them add the input and
@@ -229,15 +245,6 @@ function App() {
 
     //setTasks([...tasks, input]);  // puts the next task on the bottom.
     //setTasks([ input, ...tasks]); // puts the next task on the top.
-
-    const newTask = {
-      AKey: sAKey,
-      userName: user["email"],
-      title: input,
-      dateTime: currentTime,
-      completed: false,
-      textDec: "none",
-    };
 
     // insert / add to database collection.
     db.collection("tasks").add({
@@ -247,10 +254,32 @@ function App() {
       dateTime: currentTime,
       completed: false,
       textDec: "none",
-    });
+    })
+      .then(docRef => {
+        // Troubleshooting
+        //console.log("Just added: docRef.id: " + docRef.id);
 
-    // Add new task to the useState tasks.
-    setTasks([newTask, ...tasks]); // puts the next task on the top.
+        //
+        const newTaskData = {
+          id: docRef.id,
+          AKey: sAKey,
+          userName: user["email"],
+          title: input,
+          dateTime: currentTime,
+          completed: false,
+          textDec: "none",
+        };
+
+        // Troubleshooting
+        //console.log("new task data: ", newTaskData);
+
+        //
+        // Add new task to the useState tasks.
+        setTasks([newTaskData, ...tasks]); // puts the next task on the top.
+
+        ////
+      })
+      .catch(error => console.error("Error adding document: ", error))
 
     // clear the input field
     setInput("");
@@ -298,8 +327,20 @@ function App() {
     //...but to get the check box to respond, to work, I had to comment this out!!?
     //e.preventDefault();
 
+    // In Safari on my iPhone the checkbox and delete buttons are not working after creating a task.
+    // ...the button moves when I tap on it but it is not rerendering.
+    // This is an attempt to make it re-render.  this.forceUpdate()
+
+    //
+    //alert("In handleComplete!!  " + e.target.checked)
+
+
     //
     let id = e.target.value;
+
+    // Troubleshooting
+    //console.log("In handleComplete: id: " + id)
+
     //
     let index = -1;
     //
@@ -340,8 +381,20 @@ function App() {
       completed: e.target.checked,
       textDec: updateTextDec,
     });
+    //
+    // document.querySelector.
     /////
   };
+
+  //
+  // const getNewKey = () => {
+  //   let date = new Date();
+  //   let numberedDate = date.getTime();
+  //   let newKey = numberedDate;
+
+  //   return newKey;
+  //   ////
+  // }
 
   // Return: This is HTML to be displayed that the main function will return.
   // REACT allows javascript to update parts of this without refreshing the whole page.
@@ -363,54 +416,58 @@ function App() {
             userAuth={auth}
           />
         ) : (
-          <div>
-            <Logout appUserName={user["email"]} logoutUser={logout} />
-
-            <form>
-              <div className="app-title">Task List</div>
-
-              <Clock />
-
-              <div className="add-task">
-                <div className="input-field">
-                  <input
-                    placeholder="Enter Task"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    type="text"
-                  />
-                </div>
-
-                <div className="add-task-button">
-                  <button
-                    type="submit"
-                    disabled={!input}
-                    value={username}
-                    onClick={handleSubmit}
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-
-              <hr></hr>
-            </form>
-
             <div>
-              {tasks.map((task, i) => (
-                <Task
-                  title={task.title}
-                  completed={task.completed}
-                  key={i}
-                  index={task.id}
-                  deleteTask={handleDelete}
-                  markComplete={handleComplete}
-                  titleStyle={task.textDec}
-                />
-              ))}
+              <Logout
+                appUserName={user["email"]}
+                logoutUser={logout}
+                refreshPage={refresh}
+              />
+
+              <form>
+                <div className="app-title">Task List</div>
+
+                <Clock />
+
+                <div className="add-task">
+                  <div className="input-field">
+                    <input
+                      placeholder="Enter Task"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      type="text"
+                    />
+                  </div>
+
+                  <div className="add-task-button">
+                    <button
+                      type="submit"
+                      disabled={!input}
+                      value={username}
+                      onClick={handleSubmit}
+                    >
+                      Save
+                  </button>
+                  </div>
+                </div>
+
+                <hr></hr>
+              </form>
+
+              <div>
+                {tasks.map((task, i) => (
+                  <Task
+                    title={task.title}
+                    completed={task.completed}
+                    key={i}
+                    index={task.id}
+                    deleteTask={handleDelete}
+                    markComplete={handleComplete}
+                    titleStyle={task.textDec}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

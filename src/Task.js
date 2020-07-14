@@ -20,7 +20,43 @@ const Task = (props) => {
         textDecoration: "none",
       };
     }
+    ////
   };
+
+  // let count = 0;
+  // let count2 = 0;
+  // safariRenderHack function. An attempt to get the Task components check box to rerender when tapped on my iphone.
+  // I tried it in the div, Next I am trying an updated key in the actual object, button tag, input tag.
+  // const safariRenderHack = () => {
+
+  //   let date = new Date();
+  //   let numberedDate = date.getTime();
+  //   let newKey = numberedDate;
+  //   //
+  //   // console.log(countInteger % 2);
+  //   // console.log("In safariRenderHack returning newKey: " + newKey);
+
+  //   return newKey;
+
+  //   // if (countInteger % 2 === 0) {
+  //   //   return {
+  //   //     opacity: 1
+  //   //   };
+  //   // } else {
+  //   //   return {
+  //   //     opacity: 0.5
+  //   //   };
+  //   // };
+  //   ////
+  //   // this.forceUpdate();
+  //   ////
+  // };
+
+  //
+  // const toggleChecked = (completed) => {
+  //   //
+  //   //return completed;
+  // }
 
   /////////////////////////////
   return (
@@ -28,6 +64,7 @@ const Task = (props) => {
       <div className="task">
         <div className="check-box-group">
           <div className="check-box-main">
+
             <input
               className="check-box"
               type="checkbox"
@@ -35,6 +72,7 @@ const Task = (props) => {
               checked={props.completed}
               onChange={props.markComplete}
             />
+
           </div>
 
           <div className="task-title" style={getStyle(props)}>
@@ -42,8 +80,9 @@ const Task = (props) => {
           </div>
         </div>
 
-        <div className="deleteButton-parent">
+        <div className="deleteButton-parent" >
           <button
+
             className="deleteButton"
             value={props.index}
             onClick={props.deleteTask}
@@ -52,7 +91,7 @@ const Task = (props) => {
           </button>
         </div>
       </div>
-    </form>
+    </form >
   );
 };
 

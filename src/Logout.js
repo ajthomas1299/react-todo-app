@@ -13,6 +13,9 @@ const Logout = (props) => {
         Logout
       </button>
       <p className="user-email">{props.appUserName}</p>
+      <button className="refresh-button" onClick={props.refreshPage}>
+        Refresh
+      </button>
     </div>
   );
 };
