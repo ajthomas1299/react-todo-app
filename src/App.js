@@ -216,7 +216,9 @@ function App() {
     var dateTime =
       year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
 
+    //
     return dateTime;
+    ////
   }
 
   // newID function. An attempt to get a unique ID for adding rows to the database.
