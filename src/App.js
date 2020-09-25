@@ -332,10 +332,6 @@ function App() {
     // This is an attempt to make it re-render.  this.forceUpdate()
 
     //
-    //alert("In handleComplete!!  " + e.target.checked)
-
-
-    //
     let id = e.target.value;
 
     // Troubleshooting
@@ -382,7 +378,7 @@ function App() {
       textDec: updateTextDec,
     });
     //
-    // document.querySelector.
+
     /////
   };
 
